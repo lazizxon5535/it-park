@@ -1,0 +1,171 @@
+from aiogram import Dispatcher, Bot, executor, types
+from asyncio import sleep
+from aiogram.contrib.fsm_storage.memory import MemoryStorage
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup, user
+
+bot = Bot(token="6502138151:AAHO5GJhpVHFZbOOIpIs5btFlCDDdQL2Lj4")
+dp = Dispatcher(bot=bot)
+
+start_keybord = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [
+            InlineKeyboardButton(text="Dice 🎲", callback_data="Dice 🎲"),
+            InlineKeyboardButton(text="Foodboll ⚽️", callback_data="Foodboll ⚽️"),
+            InlineKeyboardButton(text="Basketboll 🏀", callback_data="Basketboll 🏀"),
+        ],
+        [
+            InlineKeyboardButton(text="Dart 🎯", callback_data="Dart 🎯"),
+            InlineKeyboardButton(text="Kazino 🎰", callback_data="Kazino 🎰"),
+            InlineKeyboardButton(text="Bovling 🎳", callback_data="Bovling 🎳")
+        ]
+    ]
+)
+
+storage = MemoryStorage()
+dp = Dispatcher(bot=bot, storage=storage)
+
+
+@dp.message_handler(text="/start")
+async def function_Start(message: types.Message):
+    await message.answer(f"Assalom aleykum {message.from_user.first_name}\nBotning menyusi", reply_markup=start_keybord)
+
+
+@dp.callback_query_handler(text="Dice 🎲")
+async def cmd_export(call: types.CallbackQuery):
+    await sleep(1)
+    await call.message.answer("Men tashlayman!")
+    await sleep(0.5)
+    bot = await call.message.answer_dice()
+    bot = bot['dice']['value']
+    await sleep(3)
+    await call.message.answer("Sizni urningizga tashlayman!")
+    await sleep(0.2)
+    user = await call.message.answer_dice()
+    user = user['dice']['value']
+    await sleep(4)
+
+    if user > bot:
+        await call.message.answer("Siz yutdingiz!!")
+    elif user == bot:
+        await call.message.answer("Durang!")
+    else:
+        await call.message.answer("Men yutdim!")
+
+
+@dp.callback_query_handler(text="Foodboll ⚽️")
+async def cmd_export(call: types.CallbackQuery):
+    await sleep(2)
+    await call.message.answer("Men tashlayman!")
+    await sleep(0.5)
+    bot = await call.message.answer_dice("⚽️")
+    bot = bot['dice']['value']
+    await sleep(3)
+    await call.message.answer("Sizni urningizga tashlayman!")
+    await sleep(0.2)
+    user = await call.message.answer_dice("⚽️")
+    user = user['dice']['value']
+    await sleep(4)
+
+    if user > bot:
+        await call.message.answer("Siz yutdingiz!!")
+    elif user == bot:
+        await call.message.answer("Durang!")
+    else:
+        await call.message.answer("Men yutdim!")
+
+
+@dp.callback_query_handler(text="Basketboll 🏀")
+async def cmd_export(call: types.CallbackQuery):
+    await sleep(2)
+    await call.message.answer("Men tashlayman!")
+    await sleep(0.5)
+    bot = await call.message.answer_dice("🏀")
+    bot = bot['dice']['value']
+    await sleep(3)
+    await call.message.answer("Sizni urningizga tashlayman!")
+    await sleep(0.2)
+    user = await call.message.answer_dice("🏀")
+    user = user['dice']['value']
+    await sleep(4)
+
+    if user > bot:
+        await call.message.answer("Siz yutdingiz!!")
+    elif user == bot:
+        await call.message.answer("Durang!")
+    else:
+        await call.message.answer("Men yutdim!")
+
+
+@dp.callback_query_handler(text="Dart 🎯")
+async def cmd_export(call:types.CallbackQuery):
+    await sleep(2)
+    await call.message.answer("Men tashlayman!")
+    await sleep(0.5)
+    bot = await call.message.answer_dice("🎯")
+    bot= bot['dice']['value']
+    await sleep(3)
+    await call.message.answer("Sizni urningizda tashlayman!")
+    await sleep(0.2)
+    user = await call.message.answer_dice("🎯")
+    user = user['dice']['value']
+    await sleep(4)
+
+    if user > bot:
+        await call.message.answer("Siz yutdingiz!!")
+    elif user == bot:
+        await call.message.answer("Durang!")
+    else:
+        await call.message.answer("Men yutdim!")
+
+
+@dp.callback_query_handler(text="Kazino 🎰")
+async def cmd_export(call:types.CallbackQuery):
+    await sleep(2)
+    await call.message.answer("Men tashlayman!")
+    await sleep(0.5)
+    bot = await call.message.answer_dice("🎰")
+    bot = bot['dice']['value']
+    await sleep(3)
+    await call.message.answer("Sizni urningizda tashlayman!")
+    await sleep(2)
+    user = await call.message.answer_dice("🎰")
+    user = user['dice']['value']
+    await sleep(4)
+
+    if user > bot:
+        await call.message.answer("Siz yutdingiz!!")
+    elif user == bot:
+        await call.message.answer("Durang")
+    else:
+        await call.message.answer("Men yutdim")
+
+
+
+@dp.callback_query_handler(text="Bovling 🎳")
+async def cmd_export(call:types.CallbackQuery):
+    await sleep(2)
+    await call.message.answer("Men tashlayman!")
+    await sleep(0.5)
+    bot = await call.message.answer_dice("🎳")
+    bot = bot['dice']['value']
+    await sleep(3)
+    await call.message.answer("Sizni urningizda tashlayman!")
+    await sleep(2)
+    user = await call.message.answer_dice("🎳")
+    user = user['dice']['value']
+    await sleep(4)
+
+    if user > bot:
+        await call.message.answer("Siz yutdingiz!!")
+    elif user == bot:
+        await call.message.answer("Durang")
+    else:
+        await call.message.answer("Men yutdim")
+
+if __name__ == "__main__":
+    executor.start_polling(dp, skip_updates=True)
+
+
+
+
+
